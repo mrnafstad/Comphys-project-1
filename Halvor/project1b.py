@@ -5,6 +5,9 @@ import matplotlib.pylab as mpl
 #take input for matrix size
 n = int(sys.argv[1])
 
+#define steplength
+h = 1/float(n-1)
+
 #define arrays for tridiagonal matrix and x-values
 a = np.zeros(n+1)							#original diagonal elements
 a.fill(2)
@@ -39,12 +42,14 @@ def ftildei(f_i, fprev, c, atildeprev):
 	else:
 		return f_i
 #define the function that gives the solution to the problem
-def sol(ftildeprev, b, uprev, atilde):
+def sol(ftildeprev, b, unext, atilde):
 	if b != 0:
-		return (ftildeprev - atilde*uprev)/b
-
+		return (ftildeprev - b*unext)/atilde
+	else:
+		#since u(0) = 0 anyways
+		return 0
 #set initial values
-a[0] = atilde[0] = f[0]
+atilde[0] = a[0]
 b[-1] = 0
 c[0] = 0
 u[0] = u[-1] = 0
@@ -55,8 +60,11 @@ u[0] = u[-1] = 0
 
 for i in range(n):
 	atilde[i+1] = atildei(a[i+1], c[i], b[i], atilde[i])
-	ftildepre = ftildei(f[i+1], f[i], c[i], atilde[i])
-	u[i+1] = sol(ftildepre, b[i], u[i], atilde[i])
+	ftildepre[i+1] = ftildei(f[i+1], f[i], c[i], atilde[i])
+
+for i in range(n-1, -1, -1):
+	u[i] = h**2*sol(ftildepre[i], b[i], u[i+1], atilde[i])
+
 
 mpl.plot(x, f, "--")
 mpl.hold("On")
