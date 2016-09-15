@@ -1,6 +1,7 @@
 import numpy as np
 import sys
 import matplotlib.pylab as mpl
+import time
 
 #take input for matrix size
 n = int(sys.argv[1])
@@ -25,26 +26,24 @@ u = np.zeros(n+1)
 analytic = 1 - (1-np.exp(-10))*x-np.exp(-10*x)
 
 #array for values of our function
-f = 100*np.exp(-10*x)
+f = h**2*100*np.exp(-10*x)
 ftildepre = np.zeros(n+1)
 
 #define the function that allows us to calculate the new diagonal elements
 def atildei(a_i, c, b, atildeprev):
-	if atildeprev != 0:
-		return a_i - (c*b)/float(atildeprev)
-	else:
-		return a_i
+	return a_i - (c*b)/float(atildeprev)
+
 
 #define the function that allows us to calculate the new functional elements
 def ftildei(f_i, fprev, c, atildeprev):
 	if atildeprev != 0:
-		return f_i - fprev*c/float(atildeprev)
+		return f_i - (fprev*c)/float(atildeprev)
 	else:
 		return f_i
 #define the function that gives the solution to the problem
 def sol(ftildeprev, b, unext, atilde):
 	if b != 0:
-		return (ftildeprev - b*unext)/atilde
+		return (ftildeprev - b*unext)/float(atilde)
 	else:
 		#since u(0) = 0 anyways
 		return 0
@@ -57,13 +56,16 @@ u[0] = u[-1] = 0
 
 
 #for loop to solve 
-
+start = time.clock()
 for i in range(n):
 	atilde[i+1] = atildei(a[i+1], c[i], b[i], atilde[i])
-	ftildepre[i+1] = ftildei(f[i+1], f[i], c[i], atilde[i])
+	ftildepre[i+1] = ftildei(f[i+1], ftildepre[i], c[i], atilde[i])
 
 for i in range(n-1, -1, -1):
-	u[i] = h**2*sol(ftildepre[i], b[i], u[i+1], atilde[i])
+	u[i] = sol(ftildepre[i], b[i], u[i+1], atilde[i])
+stop = time.clock()
+
+print stop - start
 
 
 mpl.plot(x, f, "--")
