@@ -36,9 +36,11 @@ for i in range(1, n-1):
 
 time_stop = time.clock()
 
-max_eps = max(abs(eps))
+eps_max = (max(eps[1:-1]))
+max_error = 10**eps_max
 
-print "Max relative error: ", max_eps
+print "Max relative error: ", max_error
+print "Max epsilon value: ", eps_max
 
 print "Total processing time: ", (time_stop - time_start), "seconds."
 

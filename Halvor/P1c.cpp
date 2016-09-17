@@ -55,7 +55,7 @@ int main(int argc, char* argv[]){
 	u[n-1] = 0;
 	v[0] = 0;
 
-	printf("Processing time: %f", tot_time);
+	printf("Processing time: %f seconds.", tot_time);
 
 	delete [] x; delete [] a_tilde; delete [] f; delete [] f_tilde;
 	delete [] u; delete [] v;
@@ -63,3 +63,12 @@ int main(int argc, char* argv[]){
 
 	return 0;
 }
+
+//terminal> P1c 10000
+//Processing time: 0.001000 seconds.
+
+//terminal> P!c 100000
+//Processing time: 0.015000 seconds.
+
+//terminal> P1c 1000000
+//Processing time: 0.151000 seconds.

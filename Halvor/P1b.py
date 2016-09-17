@@ -39,6 +39,8 @@ v[0] = 0
 plot(x, v)
 hold('on')
 plot(x, u)
+xlabel('x')
+ylabel('u(x)')
 legend(['Computed(v)', 'Exact(u)'])
 show()
 
