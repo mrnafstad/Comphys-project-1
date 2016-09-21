@@ -7,7 +7,6 @@ def maxerr(exact_i, u_i):
 	if exact_i == 0:
 		#Theese values will give an infinite error, which may be correct in the first cas
 		#but not in the later, which is zero error. We put theese values to zero.
-		print "shiet"
 		return False
 	else:
 		return log10(abs((u_i - exact_i)/exact_i))
@@ -54,7 +53,7 @@ for j in range(1, exponential + 1):
 	p = sorted(eps)
 
 
-	print p
+
 	maxerrarr[j-1] = p[-3]
 	print "For steplength %1.3e the maximum relative error is %1.3e ." % (h, p[-3])
 
