@@ -150,12 +150,3 @@ terminal> P1e 1000
 0.002017
 0.001009
 */
-
-//terminal> P1e 10
-//Processing time: 0.000000 seconds.
-
-//terminal> P1e 100
-//Processing time: 0.002000 seconds.
-
-//terminal> P1e 1000
-//Processing time: 1.510000 seconds.
